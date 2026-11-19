@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Burger Bar</title>
+  <meta name="description" content="The Burger Bar : commandez vos burgers en ligne, retrait sur place ou livraison.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip" href="#menu" data-i18n="skip">Aller au menu</a>
+
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="/">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2E2219"/><path d="M14 31a18 13 0 0 1 36 0z" fill="#B08D57"/><rect x="12" y="34" width="40" height="7" rx="3.5" fill="#F7EFE2"/><path d="M14 44h36a6 6 0 0 1-6 6H20a6 6 0 0 1-6-6z" fill="#B08D57"/></svg>
+        <span data-brand>The Burger Bar</span>
+      </a>
+      <div class="actions">
+        <button class="lang" id="lang" type="button">EN</button>
+        <button class="bag" id="bag" type="button">
+          <svg class="i" aria-hidden="true"><use href="/icons.svg#i-bag"/></svg>
+          <span id="bag-n" hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="kicker" data-i18n="hero.kicker">Bar à burgers</p>
+          <h1 data-i18n="hero.title">Des burgers préparés à la commande.</h1>
+          <p data-i18n="hero.sub"></p>
+          <a class="btn" href="#menu" data-i18n="hero.cta">Voir le menu</a>
+          <ul class="facts" id="facts"></ul>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 360 330">
+            <ellipse cx="180" cy="318" rx="118" ry="7" fill="#2A2019" opacity=".12"/>
+            <g class="layer" style="--d:.55s"><path d="M40 248h280v16q0 34-40 34H80q-40 0-40-34z" fill="#C9A062"/></g>
+            <g class="layer" style="--d:.45s"><rect x="44" y="214" width="272" height="17" rx="8.5" fill="#B8412F"/></g>
+            <g class="layer" style="--d:.35s"><rect x="34" y="168" width="292" height="42" rx="21" fill="#5B3A29"/></g>
+            <g class="layer" style="--d:.25s"><path d="M44 146h272l-20 34-16-28H44z" fill="#E8A92E"/></g>
+            <g class="layer" style="--d:.15s"><path d="M40 128q20-18 40 0t40 0 40 0 40 0 40 0 40 0 40 0v14H40z" fill="#7A8F5C"/></g>
+            <g class="layer" style="--d:0s">
+              <path d="M40 112C40 42 120 14 180 14s140 28 140 98z" fill="#C9A062"/>
+              <g fill="#F6E7C1"><ellipse cx="110" cy="62" rx="8" ry="4" transform="rotate(-25 110 62)"/><ellipse cx="170" cy="42" rx="8" ry="4" transform="rotate(10 170 42)"/><ellipse cx="228" cy="64" rx="8" ry="4" transform="rotate(30 228 64)"/><ellipse cx="140" cy="88" rx="8" ry="4" transform="rotate(-8 140 88)"/><ellipse cx="205" cy="94" rx="8" ry="4" transform="rotate(18 205 94)"/><ellipse cx="262" cy="96" rx="8" ry="4" transform="rotate(-20 262 96)"/></g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="feat" id="feat" hidden>
+      <div class="wrap">
+        <h2 data-i18n="feat.title"></h2>
+        <div class="feat-row" id="feat-row"></div>
+      </div>
+    </section>
+
+    <section id="menu" class="menu">
+      <div class="tabs-wrap"><nav class="wrap tabs" id="tabs"></nav></div>
+      <div class="wrap" id="list"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <strong data-brand>The Burger Bar</strong>
+      <ul class="facts" id="foot-facts"></ul>
+      <p data-i18n="foot.note"></p>
+    </div>
+  </footer>
+
+  <button class="cartbar" id="cartbar" type="button" hidden>
+    <span class="cb-l"><svg class="i" aria-hidden="true"><use href="/icons.svg#i-bag"/></svg><b data-i18n="cart.view">Voir le panier</b><span id="cartbar-n"></span></span>
+    <b id="cartbar-t"></b>
+  </button>
+
+  <div class="scrim" id="scrim" hidden></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dtitle" aria-hidden="true" inert>
+    <div class="d-head">
+      <h2 id="dtitle" data-i18n="cart.title">Votre commande</h2>
+      <button class="x" id="d-close" type="button" data-i18n-aria="close"><svg class="i" aria-hidden="true"><use href="/icons.svg#i-close"/></svg></button>
+    </div>
+
+    <form id="form" class="d-form">
+      <div class="d-scroll">
+        <div id="cart-lines"></div>
+        <fieldset class="modes">
+          <legend data-i18n="mode.label"></legend>
+          <label class="seg"><input type="radio" name="mode" value="retrait" checked><span><svg class="i" aria-hidden="true"><use href="/icons.svg#i-store"/></svg><b data-i18n="mode.retrait"></b></span></label>
+          <label class="seg"><input type="radio" name="mode" value="livraison"><span><svg class="i" aria-hidden="true"><use href="/icons.svg#i-bike"/></svg><b id="mode-liv"></b></span></label>
+        </fieldset>
+        <label class="fld"><span data-i18n="f.nom"></span><input name="nom" required maxlength="80" autocomplete="name"></label>
+        <label class="fld"><span data-i18n="f.tel"></span><input name="tel" type="tel" required inputmode="tel" maxlength="20" autocomplete="tel"></label>
+        <label class="fld" id="addr-wrap" hidden><span data-i18n="f.adresse"></span><input name="adresse" maxlength="300" data-i18n-ph="f.adresse.ph" autocomplete="street-address"></label>
+        <label class="fld"><span data-i18n="f.note"></span><input name="note" maxlength="300" data-i18n-ph="f.note.ph"></label>
+      </div>
+      <div class="d-foot">
+        <dl id="sum"></dl>
+        <p id="err" class="err" role="alert" hidden></p>
+        <button class="btn block" id="submit" type="submit"></button>
+        <p class="pay" data-i18n="pay"></p>
+      </div>
+    </form>
+
+    <section id="done" class="d-done" hidden>
+      <svg class="i big" aria-hidden="true"><use href="/icons.svg#i-check"/></svg>
+      <h2 tabindex="-1" data-i18n="done.title"></h2>
+      <p class="num"><span data-i18n="done.num"></span> <b id="done-num"></b></p>
+      <p data-i18n="done.text"></p>
+      <button class="btn block" id="done-back" type="button" data-i18n="done.back"></button>
+    </section>
+  </aside>
+
+  <script src="/i18n.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
