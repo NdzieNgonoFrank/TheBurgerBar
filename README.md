@@ -10,16 +10,24 @@ Site en français et en anglais. Paiement à la réception de la commande.
 - **Serveur** (Node.js, Express) : les prix sont toujours relus en base, jamais pris dans le navigateur.
 - **Base de données** : PostgreSQL.
 
-## Lancer le projet en local
+## Tester en local (le plus simple)
 
 Prérequis : Node.js 18 ou plus, PostgreSQL.
 
-1. Créer la base : `createdb restaurant` (ou via pgAdmin).
-2. Installer : `npm install`
-3. Copier `.env.example` vers `.env` et renseigner au minimum `DATABASE_URL`, `SESSION_SECRET` et les informations du restaurant.
-4. Créer les tables et le menu d'exemple : `npm run setup`
-5. Créer le compte du restaurant : `npm run create-admin -- email@exemple.com MotDePasse123`
-6. Démarrer : `npm start`, puis ouvrir http://localhost:4000
+1. Créez une base vide : `createdb restaurant`
+2. `npm install`
+3. Copiez `.env.example` vers `.env` et gardez seulement la ligne `DATABASE_URL=...` (adaptée à votre base).
+4. `npm start`
+
+Au premier démarrage, le serveur crée les tables, ajoute le menu d'exemple et crée un compte admin de test : l'email et le mot de passe s'affichent dans le terminal. Ouvrez http://localhost:4000 (site) et http://localhost:4000/admin.html (espace restaurant).
+
+## Tester sur Render (le plus simple)
+
+1. New + > Postgres (Free), puis New + > Web Service (Free) relié à votre dépôt GitHub, Build `npm install`, Start `npm start`.
+2. Une seule variable : `DATABASE_URL` = l'Internal Database URL de la base.
+3. Une fois déployé, ouvrez l'onglet **Logs** : le compte admin de test et son mot de passe y sont affichés au premier démarrage.
+
+Pour la vraie mise en service, définissez `ADMIN_EMAIL` et `ADMIN_PASSWORD`, `SESSION_SECRET`, `NODE_ENV=production` et les informations du restaurant (voir le guide de déploiement).
 
 ## Personnaliser
 

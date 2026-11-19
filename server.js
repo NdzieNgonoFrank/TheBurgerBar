@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const pool = require('./lib/db');
+const { seedIfEmpty, ensureAdmin } = require('./lib/seed');
 const { notifyNewOrder } = require('./lib/notify');
 const { checkPassword, signToken, requireAdmin } = require('./lib/auth');
 
@@ -166,6 +167,11 @@ app.use((err, _req, res, _next) => {
 async function start() {
   // Crée les tables si elles n'existent pas encore (sans effet sinon).
   await pool.query(fs.readFileSync(path.join(__dirname, 'db', 'schema.sql'), 'utf8'));
+  // Préparation automatique (désactivable avec AUTO_SETUP=false) : menu d'exemple et compte admin.
+  if (process.env.AUTO_SETUP !== 'false') {
+    await seedIfEmpty(pool);
+    await ensureAdmin(pool);
+  }
   const port = process.env.PORT || 4000;
   app.listen(port, () => console.log(`Serveur prêt : http://localhost:${port}`));
 }
